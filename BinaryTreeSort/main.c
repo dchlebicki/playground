@@ -3,7 +3,6 @@
 
 typedef struct TreeNode {
     int value;
-    struct TreeNode *parent;
     struct TreeNode *leftChild;
     struct TreeNode *rightChild;
 } TreeNode;
@@ -11,19 +10,15 @@ typedef struct TreeNode {
 int insertValue(TreeNode *node, int value) {
     if(node->value < value) {
         if(node->rightChild == NULL) {
-            TreeNode* child = malloc(sizeof(TreeNode));
-            child->value = value;
-            child->parent = node;
-            node->rightChild = child;
+            node->rightChild = (struct TreeNode*) malloc(sizeof(TreeNode));
+            node->rightChild->value = value;
         } else {
             insertValue(node->rightChild, value);
         }
     } else {
         if(node->leftChild == NULL) {
-            TreeNode* child = malloc(sizeof(TreeNode));
-            child->value = value;
-            child->parent = node;
-            node->leftChild = child;
+            node->leftChild = (struct TreeNode*) malloc(sizeof(TreeNode));
+            node->leftChild->value = value;
         } else {
             insertValue(node->leftChild, value);
         }
@@ -44,8 +39,7 @@ int main() {
 
     tree->value = 8;
 
-    for(int i = 0; i < sizeof(nums) / sizeof(int); i++)
-    {
+    for(int i = 0; i < sizeof(nums) / sizeof(int); i++) {
         insertValue(tree, nums[i]);
     }
 
